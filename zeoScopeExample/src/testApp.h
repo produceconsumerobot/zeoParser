@@ -39,8 +39,8 @@ class testApp : public ofBaseApp{
 		ofxMultiScope scopeWin;
 
 		// Oscilloscope data arrays	
-		float ** rawData;
-		float ** powerData;
-		float ** filtData;
-		float ** sliceData;
+		std::vector<std::vector<float>>  rawData;
+		std::vector<std::vector<float>>  powerData;
+		std::vector<std::vector<float>>  filtData;
+		std::vector<std::vector<float>>	 sliceData;
 };

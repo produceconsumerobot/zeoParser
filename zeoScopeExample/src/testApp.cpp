@@ -41,24 +41,13 @@ void testApp::setup(){
 	}
 	
 	// Initialize Oscilloscope data arrays	
-	rawData = new float*[1];
-	rawData[0] = new float[zeo.RAW_DATA_LEN];
-	powerData = new float*[zeo.NUM_FREQS];
-	for (int i=0; i<zeo.NUM_FREQS; i++) {
-		powerData[i] = new float[1];
-	}
-	sliceData = new float*[3];
-	for (int i=0; i<3; i++) {
-		sliceData[i] = new float[1];
-	}
+	rawData.resize(1, vector<float>(zeo.RAW_DATA_LEN, 0));
+	powerData.resize(zeo.NUM_FREQS, vector<float>(1, 0));
+	sliceData.resize(3, vector<float>(1, 0));
 
 	// Setup Zeo
 	serial.listDevices();
 	serial.setup("\\\\.\\COM26", 38400);
-	//zeo.setupSerial("\\\\.\\COM26", 38400);
-	//ofAddListener(zeo.rawDataReady,this,&testApp::newRawData);
-	//ofAddListener(zeo.sliceDataReady,this,&testApp::newSliceData);
-	//zeo.startThread(true, false);
 }
 
 //--------------------------------------------------------------
@@ -135,7 +124,6 @@ void testApp::update() {
 
 	if (spliceDataReady) newSliceData(spliceDataReady);
 	if (rawDataReady) newRawData(rawDataReady);
-
 }
 
 //--------------------------------------------------------------
@@ -146,18 +134,6 @@ void testApp::draw(){
 
 //--------------------------------------------------------------
 void testApp::exit(){
-	//exit();
-	for (int i=0; i<zeo.NUM_FREQS; i++) {
-		delete powerData[i];
-	}
-	delete powerData;
-
-	for (int i=0; i<3; i++) {
-		delete sliceData[i];
-	}
-	delete sliceData;
-
-	//delete rawData[0];
 }
 
 //--------------------------------------------------------------
