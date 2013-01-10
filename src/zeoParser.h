@@ -23,10 +23,10 @@ public:
 	static const int NUM_FREQS = 7;
 
 		int number;
-		int power[NUM_FREQS];
-		int sqi;
 		int time;
+		int power[NUM_FREQS];
 		int impendance;
+		int sqi;
 		int signal;
 		int stage;
 		int version;
@@ -45,8 +45,8 @@ public:
 	static const int NUM_FREQS = 7;
 	//const static char * labels[ZEO_NUM_LABELS];
 	//const static char * stage[ZEO_NUM_STAGES];
-	char * labels[NUM_FREQS];
-	char * stage[NUM_STAGES];
+	static char * labels[NUM_FREQS];
+	static char * stage[NUM_STAGES];
 
 	//static string labels = {" 2-4 ", " 4-8 ", " 8-13", "13-18", "18-21", "11-14", "30-50"};
 	ZeoParser();

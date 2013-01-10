@@ -35,8 +35,11 @@ void ZeoSlice::copyTo(ZeoSlice * slice) {
 		slice->version = version;
 }
 
+char * ZeoParser::labels[] = {" 2-4 ", " 4-8 ", " 8-13", "13-18", "18-21", "11-14", "30-50"};
+char * ZeoParser::stage[] = {"Undefined", "Awake", "R.E.M.", "Light", "Deep"};
+
 ZeoParser::ZeoParser() {
-	
+	/*
 	labels[0] = " 2-4 ";
 	labels[1] = " 4-8 ";
 	labels[2] = " 8-13";
@@ -50,6 +53,7 @@ ZeoParser::ZeoParser() {
 	stage[2] = "R.E.M.";
 	stage[3] = "Light";
 	stage[4] = "Deep";
+	*/
 	
 	//const char * labels[] = {" 2-4 ", " 4-8 ", " 8-13", "13-18", "18-21", "11-14", "30-50"};
 	//const char * stage[] = {"Undefined", "Awake", "R.E.M.", "Light", "Deep"};
@@ -80,6 +84,9 @@ void ZeoParser::getFiltAlignedRawData(float * data){
 }
 
 void ZeoParser::getFilteredData(float * data){
+#ifdef DEBUG_PRINT
+	printf("ZeoParser::getFilteredData\n"); 
+#endif
 	for (int i=0; i<RAW_DATA_LEN; i++) {
 		data[i] = filteredData[i];
 	}
