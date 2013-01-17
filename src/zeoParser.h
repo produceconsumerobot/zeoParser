@@ -12,6 +12,8 @@
 #include <stdio.h>
 #include <math.h>
 #include <algorithm> // needed for max, min, copy
+#include <vector>
+#include <string>
 
 using namespace std;
 
@@ -24,7 +26,7 @@ public:
 
 		int number;
 		int time;
-		int power[NUM_FREQS];
+		std::vector<int> power;
 		int impendance;
 		int sqi;
 		int signal;
@@ -33,8 +35,9 @@ public:
 
 		ZeoSlice();
 		~ZeoSlice();
-		void copyTo(ZeoSlice * slice);
 };
+
+
 
 class ZeoParser {
 
@@ -43,29 +46,27 @@ public:
 	static const int RAW_DATA_LEN = 128;
 	static const int NUM_STAGES = 5;
 	static const int NUM_FREQS = 7;
-	//const static char * labels[ZEO_NUM_LABELS];
-	//const static char * stage[ZEO_NUM_STAGES];
-	static char * labels[NUM_FREQS];
-	static char * stage[NUM_STAGES];
+	static const string labels[NUM_FREQS];
+	static const string stage[NUM_STAGES];
 
-	//static string labels = {" 2-4 ", " 4-8 ", " 8-13", "13-18", "18-21", "11-14", "30-50"};
 	ZeoParser();
 	~ZeoParser();
 
 	int parsePacket(char *buffer, int available, bool * spliceDataReady, bool * rawDataReady); 
-	void getSlice(ZeoSlice * data);
-	void getRawData(float * data);
-	void getFiltAlignedRawData(float * data);
-	void getFilteredData(float * data);
-	void getPowerData(int * data);
+	ZeoSlice getSlice();
+	std::vector<float> getRawData();
+	std::vector<float> getFiltAlignedRawData();
+	std::vector<float> getFilteredData();
+	std::vector<int> getPowerData();
 
 private:
 	ZeoSlice slice;
-	float rawData[RAW_DATA_LEN];
-	float rawBuffer[RAW_DATA_LEN*2];
-	float filtAlignedRawData[RAW_DATA_LEN];
-	float filteredData[RAW_DATA_LEN];
+	std::vector<float> rawData;
+	std::vector<float> rawBuffer;
+	std::vector<float> filtAlignedRawData;
+	std::vector<float> filteredData;
 	int filtBufferLevel;
+	bool printData;
 
 	void process_slice();
 	void process_waveform(char *buffer);

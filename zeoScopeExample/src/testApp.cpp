@@ -20,7 +20,7 @@ void testApp::setup(){
 		const int nVariables = 1;
 		ofColor colors[nVariables] = {ofColor(0,200,0)};
 		string names[nVariables] = {"Filt EEG"};
-		scopeWin.scopes[0].setup(rawTimeWindow, zeo.RAW_DATA_LEN, names, colors, nVariables, 7., 0.);
+		scopeWin.scopes.at(0).setup(rawTimeWindow, zeo.RAW_DATA_LEN, names, colors, nVariables, 7., 0.);
 	}
 	{
 		const int nVariables = zeo.NUM_FREQS;
@@ -31,13 +31,13 @@ void testApp::setup(){
 		for (int i=0; i<nVariables; i++) {
 			names[i] = zeo.labels[i];
 		}
-		scopeWin.scopes[1].setup(powerTimeWindow, 1, names, colors, nVariables, 0.07, -350.);
+		scopeWin.scopes.at(1).setup(powerTimeWindow, 1, names, colors, nVariables, 0.07, -350.);
 	}
 	{
 		const int nVariables = 3;
 		ofColor colors[nVariables] = {ofColor(200,0,0), ofColor(0,200,0), ofColor(0,0,200)};
 		string names[nVariables] = {"Impedance", "SQI", "Signal"};
-		scopeWin.scopes[2].setup(powerTimeWindow, 1, names, colors, nVariables, 0.5, -350.);
+		scopeWin.scopes.at(2).setup(powerTimeWindow, 1, names, colors, nVariables, 0.5, -350.);
 	}
 	
 	// Initialize Oscilloscope data arrays	
@@ -51,51 +51,38 @@ void testApp::setup(){
 }
 
 //--------------------------------------------------------------
-void testApp::newSliceData(bool & ready){
-	printf("SLICE READY\n");
-
-	/*
-	int zeoData[ZEO_NUM_LABELS];
-	zeo.getPowerData(zeoData);
-
-	for (int i=0; i<ZEO_NUM_LABELS; i++) {
-		powerData[i][0] = (float) zeoData[i];
-		printf("    %s: %f, %i\n", zeo.labels[i], powerData[i], zeoData[i]);
-	}
-	scopeWin.scopes[1].updateData(powerData, 1);
-	*/
-
-	ZeoSlice zeoSlice;
-	zeo.getSlice(&zeoSlice);
-	for (int i=0; i<zeo.NUM_FREQS; i++) {
-		powerData[i][0] = (float) zeoSlice.power[i];
-		printf("    %s: %f, %i\n", zeo.labels[i], powerData[i][0], zeoSlice.power[i]);
-	}
-	scopeWin.scopes[1].updateData(powerData, 1);
-
-	sliceData[0][0] = zeoSlice.impendance;
-	sliceData[1][0] = zeoSlice.sqi*40; // multiply for display
-	sliceData[2][0] = zeoSlice.signal*1500; // multiply for display
-	scopeWin.scopes[2].updateData(sliceData, 1);
-}
-
-//--------------------------------------------------------------
 void testApp::newRawData(bool & ready){
 	printf("RAW READY\n");
 	
-	float zeoData[zeo.RAW_DATA_LEN];
+	// Get Zeo raw & filtered data
+	rawData.at(0) = zeo.getFilteredData();
 
-	zeo.getFilteredData(zeoData);
-
-	for (int i=0; i<zeo.RAW_DATA_LEN; i++) {
-		rawData[0][i] = zeoData[i];
-	}
 	printf("    Raw Data:");
 	for (int i=0; i<6; i++) {
-		printf(" %f, %f;", rawData[0][i], zeoData[i]);
+		cout.precision(5);
+		cout << fixed << rawData.at(0).at(i) << ", " ;
+		//printf(" %f, %f;", rawData[0][i], zeoData[i]);
 	}
 	printf("\n");
-	scopeWin.scopes[0].updateData(rawData, zeo.RAW_DATA_LEN);
+	scopeWin.scopes.at(0).updateData(rawData);
+}
+
+//--------------------------------------------------------------
+void testApp::newSliceData(bool & ready){
+	printf("SLICE READY\n");
+
+	ZeoSlice zeoSlice;
+	zeoSlice = zeo.getSlice();
+	for (int i=0; i<zeo.NUM_FREQS; i++) {
+		powerData.at(i).at(0) = (float) zeoSlice.power.at(i);
+		printf("    %s: %f, %i\n", zeo.labels[i].c_str(), powerData.at(i).at(0), zeoSlice.power.at(i));
+	}
+	scopeWin.scopes.at(1).updateData(powerData);
+
+	sliceData.at(0).at(0) = zeoSlice.impendance;
+	sliceData.at(1).at(0) = zeoSlice.sqi*40; // multiply for display
+	sliceData.at(2).at(0) = zeoSlice.signal*1500; // multiply for display
+	scopeWin.scopes.at(2).updateData(sliceData);
 }
 
 //--------------------------------------------------------------
