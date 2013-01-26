@@ -67,14 +67,14 @@ void ZeoParser::process_slice() {
 	if (printData) {
 		printf("slice number %d:\n", slice.number);
 		for (i = 0; i < NUM_FREQS; i++) {
-			if (slice.power.at(i) >= 0) printf("    %s: %d\n", labels[i], slice.power.at(i));
+			if (slice.power.at(i) >= 0) printf("    %s: %d\n", labels[i].c_str(), slice.power.at(i));
 		};
 		if (slice.sqi >= 0) printf("    SQI: %d\n", slice.sqi);
 		//printf("    Date: %s", asctime(gmtime((time_t*) &slice.time)));
 		if (slice.impendance >= 0) printf("    Impendance: %d\n", slice.impendance);
 		//if (slice.signal >= 0) printf("    Signal: %s\n", slice.sqi ? "Good" : "Bad");
 		if (slice.signal >= 0) printf("    Signal: %u\n", slice.signal);
-		if (slice.stage >= 0 && slice.stage <= 4) printf("    Sleep Stage: %s\n", stage[slice.stage]);
+		if (slice.stage >= 0 && slice.stage <= 4) printf("    Sleep Stage: %s\n", stage[slice.stage].c_str());
 		if (slice.time > 0) printf("    RTC Time: %d\n", slice.time);
 	}
 }
@@ -84,7 +84,7 @@ void ZeoParser::process_waveform(char * buffer) {
 		printf("We have waveform data: ");
 	}
 	for (int i = 0; i < RAW_DATA_LEN; i++) {
-		int raw = *((_int16*) (buffer + 2*i));
+		int raw = *((short*) (buffer + 2*i));
 		//value = float(value*315)/0x8000    # convert to uV value FIX
 		rawData.at(i) = ((float) raw * 315) / ((float) 0x8000);
 		if (printData) {
