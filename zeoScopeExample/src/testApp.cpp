@@ -24,10 +24,10 @@ void testApp::setup(){
 	}
 	{
 		const int nVariables = zeo.NUM_FREQS;
-		ofColor colors[nVariables] = {ofColor(200,0,0), ofColor(0,200,0), ofColor(0,0,200), 
+		ofColor colors[7] = {ofColor(200,0,0), ofColor(0,200,0), ofColor(0,0,200),
 			ofColor(0,200,200), ofColor(200,0,200), ofColor(200,200,0), ofColor(100,100,100)};
 
-		string names[nVariables];
+		string names[7];
 		for (int i=0; i<nVariables; i++) {
 			names[i] = zeo.labels[i];
 		}
@@ -47,7 +47,9 @@ void testApp::setup(){
 
 	// Setup Zeo
 	serial.listDevices();
-	serial.setup("\\\\.\\COM26", 38400);
+	//serial.setup("\\\\.\\COM26", 38400); // Windows
+    serial.setup("tty.usbserial", 38400); // OSX
+    
 }
 
 //--------------------------------------------------------------
