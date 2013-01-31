@@ -84,7 +84,8 @@ void ZeoParser::process_waveform(char * buffer) {
 		printf("We have waveform data: ");
 	}
 	for (int i = 0; i < RAW_DATA_LEN; i++) {
-		int raw = *((short*) (buffer + 2*i));
+		//int raw = *((short*) (buffer + 2*i)); // may be necessary for xcode
+		int raw = *((_int16*) (buffer + 2*i));
 		//value = float(value*315)/0x8000    # convert to uV value FIX
 		rawData.at(i) = ((float) raw * 315) / ((float) 0x8000);
 		if (printData) {
