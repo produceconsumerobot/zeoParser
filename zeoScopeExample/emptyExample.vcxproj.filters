@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="src\testApp.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\main.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\zeoParser\src\zeoParser.cpp">
+      <Filter>addons\zeoParser\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxOscilloscope\src\ofxOscilloscope.cpp">
+      <Filter>addons\ofxOscilloscope\src</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="src">
+      <UniqueIdentifier>{d8376475-7454-4a24-b08a-aac121d3ad6f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="addons">
+      <UniqueIdentifier>{95e0d444-3fda-4c66-80ee-d185096aac1a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="addons\ofxOscilloscope">
+      <UniqueIdentifier>{ad9b5add-d31a-4996-92a1-75ace7aac335}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="addons\zeoParser">
+      <UniqueIdentifier>{0e2f2d90-a810-4222-9246-2b240ccc5825}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="addons\zeoParser\src">
+      <UniqueIdentifier>{ee6d4de4-14e2-4f5d-ac40-ac957ca98096}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="addons\ofxOscilloscope\src">
+      <UniqueIdentifier>{bde32a92-6ed4-40b3-9cc6-40d714be82be}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\testApp.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\zeoParser\src\zeoParser.h">
+      <Filter>addons\zeoParser\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxOscilloscope\src\ofxOscilloscope.h">
+      <Filter>addons\ofxOscilloscope\src</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
