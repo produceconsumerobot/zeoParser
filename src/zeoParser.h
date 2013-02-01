@@ -14,6 +14,7 @@
 #include <algorithm> // needed for max, min, copy
 #include <vector>
 #include <string>
+#include <sstream>
 
 using namespace std;
 
@@ -35,6 +36,7 @@ public:
 
 		ZeoSlice();
 		~ZeoSlice();
+		string str();
 };
 
 

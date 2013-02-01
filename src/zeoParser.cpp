@@ -22,6 +22,22 @@ ZeoSlice::ZeoSlice() {
 ZeoSlice::~ZeoSlice() {
 }
 
+string ZeoSlice::str()
+{
+	std::ostringstream os;
+	os << number << ","; // packet number
+	os << time << ","; // zeo time
+	for (int i=0; i< ZeoParser::NUM_FREQS; i++) {
+		os << power.at(i) << ","; // Power in different freq bands
+	}
+	os << impendance << ","; // Impedance
+	os << sqi << ","; // signal quality index
+	os << signal << ","; // signal quality (0/1)
+	os << stage << ","; // sleep stage
+	os << version ; // zeo packet version
+	return os.str();
+}
+
 const string ZeoParser::labels[] = {" 2-4 ", " 4-8 ", " 8-13", "13-18", "18-21", "11-14", "30-50"};
 const string ZeoParser::stage[] = {"Undefined", "Awake", "R.E.M.", "Light", "Deep"};
 
